@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Archive</title>
+  <style>
+    /* ---- STERILE, ARCHIVAL STYLE ---- */
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #777777;
+      --border: #e5e5e5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      font-size: 14px;
+      font-weight: normal;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin: 0 0 8px 0;
+    }
+
+    p {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0;
+      max-width: 420px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    .item {
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    .item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .meta {
+      font-size: 11px;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+
+    .meta span {
+      display: block;
+    }
+
+    footer {
+      margin-top: 48px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+  
+
+    /* ---- PASSWORD GATE ---- */
+    #gate {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .gate-box {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 240px;
+    }
+
+    .gate-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+
+    input, button {
+      font-size: 12px;
+      padding: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    #error {
+      font-size: 11px;
+      color: var(--muted);
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- PASSWORD GATE -->
+  <div id="gate">
+    <div class="gate-box">
+      <span class="gate-label">Archive Access</span>
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="checkPassword()">Enter</button>
+      <span id="error">Access denied</span>
+    </div>
+  </div>
+
+  <!-- EDIT SITE TITLE + DESCRIPTION HERE -->
+  <header>
+    <h1>Image Archive</h1>
+    <p>Visual records. Documented plainly. No emphasis.</p>
+  </header>
+
+  <!-- IMAGE GRID -->
+  <main class="grid">
+
+    <!-- ITEM 1 -->
+    <div class="item">
+      <img src="images/image-01.jpg" alt="" />
+      <div class="meta">
+        <span>ID: 001</span>
+        <span>Object: Untitled</span>
+        <span>Date: 2026</span>
+        <span>Notes: Found image.</span>
+      </div>
+    </div>
+
+    <!-- ITEM 2 -->
+    <div class="item">
+      <img src="images/image-02.jpg" alt="" />
+      <div class="meta">
+        <span>ID: 002</span>
+        <span>Object: Untitled</span>
+        <span>Date: 2026</span>
+        <span>Notes: Studio photograph.</span>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <span>Archive maintained manually.</span>
+  </footer>
+
+  <script>
+    const correctPassword = "bbbp"; // CHANGE THIS
+
+    function checkPassword() {
+      const input = document.getElementById("password").value;
+      if (input === correctPassword) {
+        document.getElementById("gate").style.display = "none";
+      } else {
+        document.getElementById("error").style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>
