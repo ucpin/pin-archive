@@ -21,10 +21,13 @@
     body {
       margin: 0;
       padding: 24px;
-     font-family: "Courier Prime", monospace;
+      font-family: "Courier Prime", monospace;
       background: var(--bg);
       color: var(--text);
-      cursor: crosshair;
+      cursor: url("images/cursor.png") 8 8, auto;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      line-height: 1.45;
     }
 
     header {
@@ -33,8 +36,8 @@
 
     h1 {
       font-size: 14px;
-      font-weight: normal;
-      letter-spacing: 0.04em;
+      font-weight: 400;
+      letter-spacing: 0.01em;
       text-transform: lowercase;
       margin: 0 0 8px 0;
     }
@@ -102,13 +105,14 @@
     .gate-label {
       font-size: 11px;
       text-transform: lowercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.01em;
       color: var(--muted);
     }
 
     input, button {
       font-family: "Courier Prime", monospace;
-      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.01em;
       padding: 8px;
       border: 1px solid var(--border);
       background: transparent;
