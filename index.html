@@ -177,44 +177,12 @@
   </header>
 
   <!-- IMAGE GRID -->
-  <main class="grid">
-
-    <!-- ITEM 1 -->
-    <div class="item">
-      <img
-        src="images/image-01.png"
-        alt=""
-        onclick="openLightbox(this.src)"
-      />
-      <div class="meta">
-      </div>
-    </div>
-
-
-    <div class="item">
-      <img
-        src="images/image-02.png"
-        alt=""
-        onclick="openLightbox(this.src)"
-      />
-      <div class="meta">
-      </div>
-    </div>
-
-    <div class="item">
-      <img
-        src="images/image-03.png"
-        alt=""
-        onclick="openLightbox(this.src)"
-      />
-      <div class="meta">
-      </div>
-    </div>
-    
+  <main class="grid" id="grid"></main>
+  
   </main>
 
   <footer>
-    <span>a collection housed and maintained within uc daap</span>
+    <span>collection housed and maintained within uc daap</span>
   </footer>
   
     <!-- IMAGE LIGHTBOX -->
@@ -223,6 +191,26 @@
     </div>
 
   <script>
+    const images = [
+      "image-01.png",
+      "image-02.png",
+      "image-03.png"
+    ];
+    
+    const grid = document.getElementById("grid");
+    
+    images.forEach(name => {
+      const item = document.createElement("div");
+      item.className = "item";
+    
+      const img = document.createElement("img");
+      img.src = "images/" + name;
+      img.onclick = () => openLightbox(img.src);
+    
+      item.appendChild(img);
+      grid.appendChild(item);
+    });
+
     const correctPassword = "bbbp"; // CHANGE THIS
 
     function checkPassword() {
