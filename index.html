@@ -4,36 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>archive</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+
   <style>
-
-    input {
-  color: var(--text);
-}
-    
-    input::placeholder {
-  color: var(--text);
-  opacity: 0.5; 
-}
-
-    /* ---- IMAGE EXPAND ---- */
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(255, 255, 255, 0.90);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 998;
-      cursor: zoom-out;
-    }
-
-    .lightbox img {
-      max-width: 90vw;
-      max-height: 90vh;
-    }
-
-    /* ---- STERILE, ARCHIVAL STYLE ---- */
+    /* ---- VARIABLES ---- */
     :root {
       --bg: #FFFFFF;
       --text: #063659;
@@ -64,18 +39,17 @@
     h1 {
       font-size: 40px;
       font-weight: 400;
-      letter-spacing: 0.01em;
       text-transform: lowercase;
       margin: 0 0 8px 0;
     }
 
     p {
       font-size: 12px;
-      color: var(--text);
       margin: 0;
       max-width: 420px;
     }
 
+    /* ---- GRID ---- */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -87,29 +61,46 @@
       padding-top: 12px;
     }
 
+    /* ---- IMAGE HOVER FLOAT (⬅️ ADDED HERE) ---- */
+    @keyframes hoverFloat {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-6px); }
+      100% { transform: translateY(0); }
+    }
+
     .item img {
       width: 100%;
       height: auto;
       display: block;
       margin-bottom: 8px;
+      transition: transform 0.2s ease;
     }
 
-    .meta {
-      font-size: 12px;
-      line-height: 1.4;
-      color: var(--text);
+    .item img:hover {
+      animation: hoverFloat 1.2s ease-in-out infinite;
     }
 
-    .meta span {
-      display: block;
+    /* ---- LIGHTBOX ---- */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 998;
+      cursor: zoom-out;
+    }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
     }
 
     footer {
       margin-top: 48px;
       font-size: 12px;
-      color: var(--text);
     }
-  
 
     /* ---- PASSWORD GATE ---- */
     #gate {
@@ -129,35 +120,30 @@
       width: 240px;
     }
 
-    .gate-label {
-      font-size: 12px;
-      text-transform: lowercase;
-      letter-spacing: 0.01em;
-      color: var(--text);
-    }
-
     input, button {
       font-family: "Courier Prime", monospace;
-      font-weight: 400;
-      letter-spacing: 0.01em;
       padding: 8px;
       border: 1px solid var(--text);
       background: transparent;
+      color: var(--text);
+    }
+
+    input::placeholder {
+      color: var(--text);
+      opacity: 0.5;
     }
 
     button {
       cursor: crosshair;
-      color: var(--text);
     }
 
     #error {
       font-size: 12px;
-      color: var(--text);
       display: none;
     }
-
   </style>
 </head>
+
 <body>
 
   <!-- PASSWORD GATE -->
@@ -170,25 +156,21 @@
     </div>
   </div>
 
-  <!-- EDIT SITE TITLE + DESCRIPTION HERE -->
   <header>
     <h1>uc pins</h1>
     <p>curated archive</p>
   </header>
 
-  <!-- IMAGE GRID -->
   <main class="grid" id="grid"></main>
-  
-  </main>
 
   <footer>
     <span>collection housed and maintained within uc daap</span>
   </footer>
-  
-    <!-- IMAGE LIGHTBOX -->
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-      <img id="lightbox-img" src="" alt="" />
-    </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="" />
+  </div>
 
   <script>
     const images = [
@@ -196,27 +178,27 @@
       "image-02.png",
       "image-03.png"
     ];
-    
+
     for (let i = images.length - 1; i > 0; i--) {
-  const j = Math.floor(Math.random() * (i + 1));
-  [images[i], images[j]] = [images[j], images[i]];
-}
+      const j = Math.floor(Math.random() * (i + 1));
+      [images[i], images[j]] = [images[j], images[i]];
+    }
 
     const grid = document.getElementById("grid");
-   
+
     images.forEach(name => {
       const item = document.createElement("div");
       item.className = "item";
-    
+
       const img = document.createElement("img");
       img.src = "images/" + name;
       img.onclick = () => openLightbox(img.src);
-    
+
       item.appendChild(img);
       grid.appendChild(item);
     });
 
-    const correctPassword = "bbbp"; // CHANGE THIS
+    const correctPassword = "bbbp";
 
     function checkPassword() {
       const input = document.getElementById("password").value;
@@ -226,18 +208,15 @@
         document.getElementById("error").style.display = "block";
       }
     }
-    
+
     function openLightbox(src) {
-  const lightbox = document.getElementById("lightbox");
-  const img = document.getElementById("lightbox-img");
-  img.src = src;
-  lightbox.style.display = "flex";
-}
+      document.getElementById("lightbox-img").src = src;
+      document.getElementById("lightbox").style.display = "flex";
+    }
 
-function closeLightbox() {
-  document.getElementById("lightbox").style.display = "none";
-}
-
+    function closeLightbox() {
+      document.getElementById("lightbox").style.display = "none";
+    }
   </script>
 
 </body>
