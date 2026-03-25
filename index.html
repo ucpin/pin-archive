@@ -12,8 +12,8 @@
     :root {
       --bg: #FFFFFF;
       --text: #063659;
-      --muted: #063659;
       --border: #063659;
+      --fs: 12px; /* 🔑 single source of truth */
     }
 
     * {
@@ -24,6 +24,7 @@
       margin: 0;
       padding: 24px;
       font-family: "Courier Prime", monospace;
+      font-size: var(--fs); /* 🔑 everything inherits from this */
       background: var(--bg);
       color: var(--text);
       cursor: url("images/cursor.png") 8 8, auto;
@@ -32,10 +33,7 @@
       line-height: 1.45;
     }
 
-    header {
-      margin-bottom: 32px;
-    }
-
+    /* ---- TYPE ---- */
     h1 {
       font-size: 40px;
       font-weight: 400;
@@ -43,16 +41,32 @@
       margin: 0 0 8px 0;
     }
 
+    p,
+    footer,
+    .gate-label,
+    #error,
+    input,
+    button {
+      font-size: inherit; /* 🔑 force consistency */
+    }
+
+    header {
+      margin-bottom: 32px;
+    }
+
     p {
-      font-size: 12px;
       margin: 0;
       max-width: 420px;
+    }
+
+    footer {
+      margin-top: 48px;
     }
 
     /* ---- GRID ---- */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* 🔧 fixed missing px */
       gap: 24px;
     }
 
@@ -61,7 +75,7 @@
       padding-top: 12px;
     }
 
-    /* ---- IMAGE HOVER FLOAT (⬅️ ADDED HERE) ---- */
+    /* ---- IMAGE HOVER ---- */
     @keyframes hoverFloat {
       0%   { transform: translateY(0); }
       50%  { transform: translateY(-6px); }
@@ -70,10 +84,8 @@
 
     .item img {
       width: 100%;
-      height: auto;
       display: block;
       margin-bottom: 8px;
-      transition: transform 0.2s ease;
     }
 
     .item img:hover {
@@ -97,11 +109,6 @@
       max-height: 90vh;
     }
 
-    footer {
-      margin-top: 48px;
-      font-size: 12px;
-    }
-
     /* ---- PASSWORD GATE ---- */
     #gate {
       position: fixed;
@@ -120,8 +127,13 @@
       width: 240px;
     }
 
-    input, button {
-      font-family: "Courier Prime", monospace;
+    .gate-label {
+      letter-spacing: 0.05em;
+    }
+
+    input,
+    button {
+      font-family: inherit;
       padding: 8px;
       border: 1px solid var(--text);
       background: transparent;
@@ -138,7 +150,6 @@
     }
 
     #error {
-      font-size: 12px;
       display: none;
     }
   </style>
@@ -174,44 +185,15 @@
 
   <script>
     const images = [
-      "pin1.png",
-      "pin2.png",
-      "pin3.png",
-      "pin4.png",
-      "pin5.png",
-      "pin6.png",
-      "pin7.png",
-      "pin8.png",
-      "pin9.png",
-      "pin10.png",
-      "pin11.png",
-      "pin12.png",
-      "pin13.png",
-      "pin14.png",
-      "pin15.png",
-      "pin16.png",
-      "pin17.png",
-      "pin18.png",
-      "pin19.png",
-      "pin20.png",
-      "pin21.png",
-      "pin22.png",
-      "pin23.png",
-      "pin24.png",
-      "pin25.png",
-      "pin26.png",
-      "pin27.png",
-      "pin28.png",
-      "pin29.png",
-      "pin30.png",
-      "pin31.png",
-      "pin32.png",
-      "pin33.png",
-      "pin34.png",
-      "pin35.png",
-      "pin36.png"
+      "pin1.png","pin2.png","pin3.png","pin4.png","pin5.png","pin6.png",
+      "pin7.png","pin8.png","pin9.png","pin10.png","pin11.png","pin12.png",
+      "pin13.png","pin14.png","pin15.png","pin16.png","pin17.png","pin18.png",
+      "pin19.png","pin20.png","pin21.png","pin22.png","pin23.png","pin24.png",
+      "pin25.png","pin26.png","pin27.png","pin28.png","pin29.png","pin30.png",
+      "pin31.png","pin32.png","pin33.png","pin34.png","pin35.png","pin36.png"
     ];
 
+    // shuffle
     for (let i = images.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [images[i], images[j]] = [images[j], images[i]];
@@ -235,10 +217,11 @@
 
     function checkPassword() {
       const input = document.getElementById("password").value;
+      document.getElementById("error").style.display =
+        input === correctPassword ? "none" : "block";
+
       if (input === correctPassword) {
         document.getElementById("gate").style.display = "none";
-      } else {
-        document.getElementById("error").style.display = "block";
       }
     }
 
