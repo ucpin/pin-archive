@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -100,63 +101,10 @@
       max-width: 90vw;
       max-height: 90vh;
     }
-
-    #gate {
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
-
-    .gate-box {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 240px;
-    }
-
-    .gate-label {
-      letter-spacing: 0.05em;
-    }
-
-    input,
-    button {
-      font-family: inherit;
-      padding: 8px;
-      border: 1px solid var(--text);
-      background: transparent;
-      color: var(--text);
-    }
-
-    input::placeholder {
-      color: var(--text);
-      opacity: 0.5;
-    }
-
-    button {
-      cursor: crosshair;
-    }
-
-    #error {
-      display: none;
-    }
   </style>
 </head>
 
 <body>
-
-  <!-- PASSWORD GATE -->
-  <div id="gate">
-    <div class="gate-box">
-      <span class="gate-label">access</span>
-      <input type="password" id="password" placeholder="password" />
-      <button onclick="checkPassword()">enter</button>
-      <span id="error">denied</span>
-    </div>
-  </div>
 
   <header>
     <h1>uc pins</h1>
@@ -175,7 +123,7 @@
   </div>
 
   <script>
-    // 🔑 AUTO-GENERATE IMAGES (pin1 → pin196)
+    // 🔑 AUTO-GENERATE IMAGES (pin1 → pin304)
     const images = [];
     for (let i = 1; i <= 304; i++) {
       images.push(`pin${i}.png`);
@@ -201,18 +149,6 @@
       grid.appendChild(item);
     });
 
-    const correctPassword = "bbbp";
-
-    function checkPassword() {
-      const input = document.getElementById("password").value;
-      document.getElementById("error").style.display =
-        input === correctPassword ? "none" : "block";
-
-      if (input === correctPassword) {
-        document.getElementById("gate").style.display = "none";
-      }
-    }
-
     function openLightbox(src) {
       document.getElementById("lightbox-img").src = src;
       document.getElementById("lightbox").style.display = "flex";
@@ -225,3 +161,4 @@
 
 </body>
 </html>
+```
